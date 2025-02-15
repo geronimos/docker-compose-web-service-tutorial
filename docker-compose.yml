@@ -1,0 +1,22 @@
+services:
+  books-service:
+    build: ./service/books
+    volumes:
+      - ./service/books:/usr/src/app
+    ports:
+      - 5001:80
+  fruits-service:
+    build: ./service/fruits
+    volumes:
+      - ./service/fruits:/usr/src/app
+    ports:
+      - 5002:80
+  website:
+    image: php:apache
+    volumes:
+      - ./website:/var/www/html
+    ports:
+      - 5003:80
+    depends_on:
+      - fruits-service
+      - books-service
